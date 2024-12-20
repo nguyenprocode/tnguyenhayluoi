@@ -6183,7 +6183,7 @@ Tabs.Misc:AddButton({
 	Title = "Rain Fruit",
 	Description = "Rain fruit (Fake)",
 	Callback = function()
-        for i, v in pairs(game:GetObjects("rbxassetid://83937302299842")[1]:GetChildren()) do
+        for i, v in pairs(game:GetObjects("rbxassetid://15970729030")[1]:GetChildren()) do
             v.Parent = game.Workspace.Map
             v:MoveTo(game.Players.LocalPlayer.Character.PrimaryPart.Position + Vector3.new(math.random(-50, 50), 100, math.random(-50, 50)))
             if v.Fruit:FindFirstChild("AnimationController") then
