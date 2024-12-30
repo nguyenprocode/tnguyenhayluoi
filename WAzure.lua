@@ -8,7 +8,7 @@ getgenv().Key = getgenv().Key or ""
 
 if getgenv().Key ~= requiredKey then
     -- Văng game với thông báo lỗi
-    game.Players.LocalPlayer:Kick("Invalid key. Please try again or contact Facebook: fb.com/Tnguyennekk. (Error code: 401)")
+    game.Players.LocalPlayer:Kick("Key không hợp lệ. Vui lòng thử lại hoặc liên hệ với Facebook: fb.com/Tnguyennekk.")
 else
     -- Key đúng, chạy script
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua"))()
