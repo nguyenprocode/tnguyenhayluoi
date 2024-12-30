@@ -1,3 +1,4 @@
+-- Lấy các dịch vụ cần thiết
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local StarterGui = game:GetService("StarterGui")
@@ -5,18 +6,18 @@ local player = Players.LocalPlayer
 local noclip = false
 local connection
 
--- Hàm gửi thông báo
+-- Hàm thông báo
 local function notify(message)
     StarterGui:SetCore("SendNotification", {
-        Title = "Notification";
-        Text = message;
-        Duration = 3;
+        Title = "Notification",
+        Text = message,
+        Duration = 3,
     })
 end
 
 -- Hàm bật/tắt noclip
-local function toggleNoclip(state)
-    noclip = state
+local function toggleNoclip()
+    noclip = not noclip
     if noclip then
         connection = RunService.Stepped:Connect(function()
             for _, part in pairs(player.Character:GetDescendants()) do
@@ -25,7 +26,7 @@ local function toggleNoclip(state)
                 end
             end
         end)
-        notify("Noclip enabled!")
+        notify("Noclip ON!")
     else
         if connection then
             connection:Disconnect()
@@ -35,116 +36,27 @@ local function toggleNoclip(state)
                 part.CanCollide = true
             end
         end
-        notify("Noclip disabled!")
+        notify("Noclip OFF!")
     end
 end
 
--- Hàm tạo GUI menu
-local function createMenu()
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "NoclipMenu"
-    screenGui.Parent = game.CoreGui
+-- Tạo GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game:GetService("StarterGui")
 
-    -- Frame chính (Menu)
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0, 300, 0, 150)
-    frame.Position = UDim2.new(0.5, -150, 0.5, -75)
-    frame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-    frame.BackgroundTransparency = 0.2
-    frame.Visible = true -- Bảng bắt đầu hiển thị
-    frame.Parent = screenGui
+-- Tạo nút hình vuông
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 100, 0, 100) -- Kích thước nút
+toggleButton.Position = UDim2.new(0.5, -50, 0, 50) -- Vị trí nút (căn giữa trục X)
+toggleButton.AnchorPoint = Vector2.new(0.5, 0) -- Căn giữa theo trục X
+toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 255) -- Màu nền
+toggleButton.Text = "Toggle Noclip" -- Nội dung chữ
+toggleButton.TextColor3 = Color3.new(1, 1, 1) -- Màu chữ (trắng)
+toggleButton.TextSize = 20 -- Kích thước chữ
+toggleButton.Font = Enum.Font.SourceSans -- Font chữ
+toggleButton.Parent = screenGui
 
-    local title = Instance.new("TextLabel")
-    title.Size = UDim2.new(1, 0, 0.3, 0)
-    title.Position = UDim2.new(0, 0, 0, 0)
-    title.Text = "ChestFarm"
-    title.TextColor3 = Color3.new(1, 1, 1)
-    title.Font = Enum.Font.SourceSansBold
-    title.TextScaled = true
-    title.BackgroundTransparency = 1
-    title.Parent = frame
-
-    local subtitle = Instance.new("TextLabel")
-    subtitle.Size = UDim2.new(1, 0, 0.2, 0)
-    subtitle.Position = UDim2.new(0, 0, 0.3, 0)
-    subtitle.Text = "Tạo bởi VGB Blox Fruits"
-    subtitle.TextColor3 = Color3.new(0.8, 0.8, 0.8)
-    subtitle.Font = Enum.Font.SourceSans
-    subtitle.TextScaled = true
-    subtitle.BackgroundTransparency = 1
-    subtitle.Parent = frame
-
-    local enableButton = Instance.new("TextButton")
-    enableButton.Size = UDim2.new(0.4, 0, 0.3, 0)
-    enableButton.Position = UDim2.new(0.1, 0, 0.6, 0)
-    enableButton.Text = "Enable"
-    enableButton.TextColor3 = Color3.new(0, 1, 0)
-    enableButton.Font = Enum.Font.SourceSansBold
-    enableButton.TextScaled = true
-    enableButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    enableButton.Parent = frame
-
-    local disableButton = Instance.new("TextButton")
-    disableButton.Size = UDim2.new(0.4, 0, 0.3, 0)
-    disableButton.Position = UDim2.new(0.5, 0, 0.6, 0)
-    disableButton.Text = "Disable"
-    disableButton.TextColor3 = Color3.new(1, 0, 0)
-    disableButton.Font = Enum.Font.SourceSansBold
-    disableButton.TextScaled = true
-    disableButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    disableButton.Parent = frame
-
-    -- Nút ẩn/hiện menu
-    local toggleMenuButton = Instance.new("TextButton")
-    toggleMenuButton.Size = UDim2.new(0, 50, 0, 50) -- Hình vuông
-    toggleMenuButton.Position = UDim2.new(0.5, -25, 0, 10) -- Giữa trục X
-    toggleMenuButton.Text = ""
-    toggleMenuButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-    toggleMenuButton.Parent = screenGui
-
-    local dragging = false
-    local dragStart, startPos
-
-    -- Kéo thả nút
-    toggleMenuButton.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            dragStart = input.Position
-            startPos = toggleMenuButton.Position
-        end
-    end)
-
-    toggleMenuButton.InputChanged:Connect(function(input)
-        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = input.Position - dragStart
-            toggleMenuButton.Position = UDim2.new(
-                startPos.X.Scale, startPos.X.Offset + delta.X,
-                startPos.Y.Scale, startPos.Y.Offset + delta.Y
-            )
-        end
-    end)
-
-    toggleMenuButton.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = false
-        end
-    end)
-
-    -- Sự kiện khi nhấn nút Toggle Menu
-    toggleMenuButton.MouseButton1Click:Connect(function()
-        frame.Visible = not frame.Visible
-    end)
-end
-
--- Tạo GUI khi nhân vật thêm vào
-local function onCharacterAdded()
-    wait(0.1)
-    createMenu()
-end
-
--- Kiểm tra nếu nhân vật đã tồn tại
-if player.Character then
-    onCharacterAdded()
-end
-
-player.CharacterAdded:Connect(onCharacterAdded)
+-- Xử lý khi nhấn nút
+toggleButton.MouseButton1Click:Connect(function()
+    toggleNoclip()
+end)
