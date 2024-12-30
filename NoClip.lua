@@ -45,11 +45,13 @@ local function createMenu()
     screenGui.Name = "NoclipMenu"
     screenGui.Parent = game.CoreGui
 
+    -- Frame chính (Menu)
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0, 300, 0, 150)
     frame.Position = UDim2.new(0.5, -150, 0.5, -75)
     frame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
     frame.BackgroundTransparency = 0.2
+    frame.Visible = true -- Bảng bắt đầu hiển thị
     frame.Parent = screenGui
 
     local title = Instance.new("TextLabel")
@@ -92,6 +94,17 @@ local function createMenu()
     disableButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
     disableButton.Parent = frame
 
+    -- Nút ẩn/hiện menu
+    local toggleMenuButton = Instance.new("TextButton")
+    toggleMenuButton.Size = UDim2.new(0, 100, 0, 50)
+    toggleMenuButton.Position = UDim2.new(0, 10, 0, 10)
+    toggleMenuButton.Text = "Toggle Menu"
+    toggleMenuButton.TextColor3 = Color3.new(1, 1, 1)
+    toggleMenuButton.Font = Enum.Font.SourceSansBold
+    toggleMenuButton.TextScaled = true
+    toggleMenuButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+    toggleMenuButton.Parent = screenGui
+
     -- Sự kiện khi nhấn nút Enable
     enableButton.MouseButton1Click:Connect(function()
         toggleNoclip(true)
@@ -100,6 +113,11 @@ local function createMenu()
     -- Sự kiện khi nhấn nút Disable
     disableButton.MouseButton1Click:Connect(function()
         toggleNoclip(false)
+    end)
+
+    -- Sự kiện khi nhấn nút Toggle Menu
+    toggleMenuButton.MouseButton1Click:Connect(function()
+        frame.Visible = not frame.Visible
     end)
 end
 
