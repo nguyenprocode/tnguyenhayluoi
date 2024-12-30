@@ -7,14 +7,8 @@ local requiredKey = "TEST-KEY-THANHNGUYEN"
 getgenv().Key = getgenv().Key or ""
 
 if getgenv().Key ~= requiredKey then
-    -- Hiện thông báo lỗi nếu key không đúng
-    game.StarterGui:SetCore("SendNotification", {
-        Title = "NO KEY",
-        Text = "Key không đúng! Game sẽ đóng ngay bây giờ.",
-        Duration = 5
-    })
-    wait(5)
-    game:Shutdown() -- Văng game
+    -- Văng game với thông báo lỗi
+    game.Players.LocalPlayer:Kick("Invalid key. Please try again or contact Facebook: fb.com/Tnguyennekk. (Error code: 401)")
 else
     -- Key đúng, chạy script
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua"))()
