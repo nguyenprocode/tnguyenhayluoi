@@ -96,23 +96,38 @@ local function createMenu()
 
     -- Nút ẩn/hiện menu
     local toggleMenuButton = Instance.new("TextButton")
-    toggleMenuButton.Size = UDim2.new(0, 100, 0, 50)
-    toggleMenuButton.Position = UDim2.new(0, 10, 0, 10)
-    toggleMenuButton.Text = "Toggle Menu"
-    toggleMenuButton.TextColor3 = Color3.new(1, 1, 1)
-    toggleMenuButton.Font = Enum.Font.SourceSansBold
-    toggleMenuButton.TextScaled = true
+    toggleMenuButton.Size = UDim2.new(0, 50, 0, 50) -- Hình vuông
+    toggleMenuButton.Position = UDim2.new(0.5, -25, 0, 10) -- Giữa trục X
+    toggleMenuButton.Text = ""
     toggleMenuButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
     toggleMenuButton.Parent = screenGui
 
-    -- Sự kiện khi nhấn nút Enable
-    enableButton.MouseButton1Click:Connect(function()
-        toggleNoclip(true)
+    local dragging = false
+    local dragStart, startPos
+
+    -- Kéo thả nút
+    toggleMenuButton.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = toggleMenuButton.Position
+        end
     end)
 
-    -- Sự kiện khi nhấn nút Disable
-    disableButton.MouseButton1Click:Connect(function()
-        toggleNoclip(false)
+    toggleMenuButton.InputChanged:Connect(function(input)
+        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            local delta = input.Position - dragStart
+            toggleMenuButton.Position = UDim2.new(
+                startPos.X.Scale, startPos.X.Offset + delta.X,
+                startPos.Y.Scale, startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+
+    toggleMenuButton.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = false
+        end
     end)
 
     -- Sự kiện khi nhấn nút Toggle Menu
