@@ -4,7 +4,7 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 local validKeys = {
     ["TEST-KEY-THANHNGUYEN"] = { 
         users = { "acc_mlem1", "User2" }, 
-        expiration = "11:50:00 31/12/2024" -- Thời gian hết hạn
+        expiration = "11:52:00 31/12/2024" -- Thời gian hết hạn
     },
     ["XJKT-6724-MKLP"] = { 
         users = { "" }, 
