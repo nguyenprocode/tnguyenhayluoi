@@ -10,7 +10,7 @@ local usernameKeys = {
 
 -- Danh sách các key theo địa chỉ IP
 local ipKeys = {
-    ["IP-KEY-1"] = { "192.168.1.10", "203.0.113.20" },
+    ["IP-KEY-1"] = { "171.251.235.80", "203.0.113.20" },
     ["IP-KEY-2"] = { "203.0.113.50" }
 }
 
@@ -57,10 +57,10 @@ local ipAddress = getIPAddress()
 
 if usernameKeys[getgenv().Key] and not isValidUsernameKey(getgenv().Key, username) then
     -- Key yêu cầu username Roblox không hợp lệ
-    game.Players.LocalPlayer:Kick("Key sai hoặc tài khoản không hợp lệ.")
+    game.Players.LocalPlayer:Kick("Key không tồn tại hoặc tài khoản không hợp lệ. Liên hệ: fb.com/Tnguyennekk.")
 elseif ipKeys[getgenv().Key] and not isValidIPKey(getgenv().Key, ipAddress) then
     -- Key yêu cầu IP không hợp lệ
-    game.Players.LocalPlayer:Kick("Key sai hoặc IP không hợp lệ.")
+    game.Players.LocalPlayer:Kick("Key không tồn tại hoặc IP không hợp . Liên hệ: fb.com/Tnguyennekk.")
 else
     -- Key hợp lệ, chạy script
     loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua"))()
