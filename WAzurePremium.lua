@@ -4,15 +4,15 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 local validKeys = {
     ["TEST-KEY-THANHNGUYEN"] = { 
         users = { "acc_mlem1", "User2" }, 
-        expiration = "11:55:00 31/12/2024" -- Thời gian hết hạn
+        expiration = "31/12/2024 17:00:00" -- Thời gian hết hạn
     },
     ["XJKT-6724-MKLP"] = { 
         users = { "" }, 
-        expiration = "17:00:00 31/12/2024" 
+        expiration = "31/12/2024 17:00:00" 
     },
     ["VGHY-9841-AQWS"] = { 
         users = { "" }, 
-        expiration = "17:00:00 31/12/2024" 
+        expiration = "31/12/2024 17:00:00" 
     }
 }
 
@@ -21,13 +21,14 @@ getgenv().Key = getgenv().Key or ""
 
 -- Hàm chuyển đổi thời gian từ chuỗi sang đối tượng thời gian
 local function parseExpirationTime(expiration)
+    local month, day, year, hour, min, sec = expiration:match("(%d%d)/(%d%d)/(%d%d%d%d) (%d%d):(%d%d):(%d%d)")
     return os.time({
-        year = tonumber(expiration:sub(7, 10)),
-        month = tonumber(expiration:sub(4, 5)),
-        day = tonumber(expiration:sub(1, 2)),
-        hour = tonumber(expiration:sub(12, 13)),
-        min = tonumber(expiration:sub(15, 16)),
-        sec = tonumber(expiration:sub(18, 19))
+        year = tonumber(year),
+        month = tonumber(month),
+        day = tonumber(day),
+        hour = tonumber(hour),
+        min = tonumber(min),
+        sec = tonumber(sec)
     })
 end
 
