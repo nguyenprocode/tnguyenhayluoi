@@ -3,7 +3,7 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 -- Danh sách các key và tài khoản hợp lệ
 local validKeys = {
     ["TEST-KEY-THANHNGUYEN"] = { "acc_mlem1", "User2" },
-    ["XJKT-6724-MKLP"] = { "" },
+    ["XJKT-6724-MKLP"] = { "Namlaysamurayff" },
     ["VGHY-9841-AQWS"] = { "" }
 }
 
