@@ -3,12 +3,16 @@ TeleportSafe = true
 Webhook = "Your Webhook Here"
 _G.Version="Fruit Farm"
 
--- Xóa toàn bộ GUI
-for _, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-    if v:IsA("ScreenGui") or v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
-        v:Destroy()
+-- Theo dõi GUI được tạo bởi script
+local oldInstanceNew
+oldInstanceNew = hookmetamethod(game, "__newindex", function(self, key, value)
+    if key == "Parent" and value == game:GetService("CoreGui") then
+        if self:IsA("ScreenGui") or self:IsA("BillboardGui") or self:IsA("SurfaceGui") then
+            self:Destroy()
+        end
     end
-end
+    return oldInstanceNew(self, key, value)
+end)
 
 -- Tải script chính
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Efe0626/RaitoHub/main/Script"))()
